@@ -27,7 +27,8 @@ class CheckBox extends Component {
 
     onChange() {
         if (this.props.onChange &&  typeof this.props.checked === 'boolean') {
-            this.props.onChange(this.props.checked);
+            // If passing the value as a prop, return the negation of current value
+            this.props.onChange(!this.props.checked);
         } else {
             let internalChecked = this.state.internalChecked;
             let newState = !internalChecked;
@@ -106,7 +107,7 @@ class CheckBox extends Component {
         }
 
         return (
-            <TouchableHighlight accessible={this.props.accessible} accessibilityLabel={this.props.accessibilityLabel} testID={this.props.testID} onPress={this.onChange} underlayColor={this.props.underlayColor} style={styles.flexContainer}>
+            <TouchableHighlight accessible={this.props.accessible} accessibilityLabel={this.props.accessibilityLabel} testID={this.props.testID} onPress={this.onChange} underlayColor={this.props.underlayColor} style={styles.flexContainer} checkbox={this.props.hitSlop}>
                 {container}
             </TouchableHighlight>
         );
@@ -114,7 +115,7 @@ class CheckBox extends Component {
 }
 
 var styles = StyleSheet.create({
-    container: {
+    flexContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 5,
@@ -147,7 +148,8 @@ CheckBox.propTypes = {
     checkedImage: PropTypes.number,
     uncheckedImage: PropTypes.number,
     underlayColor: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    hitSlop: PropTypes.object
 };
 
 CheckBox.defaultProps = {
